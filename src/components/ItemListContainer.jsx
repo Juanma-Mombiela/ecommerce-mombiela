@@ -23,8 +23,6 @@ const ItemListContainer = () => {
 
     useEffect(() => {
 
-        console.log("Efecto")
-
         const pedido = new Promise((res, rej) => {
             setTimeout(() => {
                 res(productosIniciales)
