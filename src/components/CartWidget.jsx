@@ -1,5 +1,5 @@
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import './CartWidget.css';
+import '../styles/CartWidget.css';
 
 function CartWidget() {
 

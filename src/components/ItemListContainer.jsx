@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import '../styles/ItemListContainer.css'
 import ItemList from "./ItemList"
+import Page from "./Page"
 
 const productosIniciales = [
     {
@@ -12,6 +14,11 @@ const productosIniciales = [
         id: 2,
         nombre: "Producto 2",
         precio: 200
+    },
+    {
+        id: 3,
+        nombre: "Producto 3",
+        precio: 300
     }
 ]
 
@@ -47,7 +54,9 @@ const ItemListContainer = () => {
         )
     } else {
         return (
-            <ItemList productos={productos} />
+            <Page titulo="Catalogo" subtitulo="Lo que buscas">
+                <ItemList productos={productos} />
+            </Page>
         )
     }
 

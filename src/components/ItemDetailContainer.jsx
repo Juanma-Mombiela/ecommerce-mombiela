@@ -1,58 +1,35 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import ItemDetail from "./ItemDetail"
-
-const detallesProductos = [
-    { 
-        titulo: "Producto",
-        detalle: "Detalle del Producto"
-    }
-]
+import { useParams } from "react-router-dom";
 
 const ItemDetailContainer = () => {
 
-    const [productos, setProductos] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [producto, setItem] = useState({});
+    const { id } = useParams();
 
     useEffect(() => {
 
-        const pedido = new Promise((res, rej) => {
-            setTimeout(() => {
-                res(detallesProductos)
-            }, 2000)
-        })
+        const pedido = fetch("https://fakestoreapi.com/products/" + id)
 
-        pedido.then((resultado) => {
-            setProductos(resultado)
-            setLoading(false)
-        })
+        pedido
+            .then((respuesta) => {
+                return respuesta.json()
+            })
+            .then((respuesta) => {
+                setItem(respuesta)
+            })
+            .catch(error => console.log(error))
 
-        pedido.catch((error) => {
-            console.log("Termino el pedido mal")
-        })
-
-    }, [])
+    }, [id])
 
 
-    if (loading) {
-        return (
-            <p>Cargando...</p>
-        )
-    } else {
-        return (
-            <section className="items">
-            {productos.map((producto) => {
-                return <ItemDetail
-                producto={producto}
-                titulo={producto.titulo}     
-                detalle={producto.detalle}
-             />
-            })}
-        </section>
-            
-        )
-        
-    }
-
+    return (
+        <>
+            <div className='container'>
+                <ItemDetail producto={producto} />
+            </div>
+        </>
+    );
 }
 
-export default ItemDetailContainer
+export default ItemDetailContainer;

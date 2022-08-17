@@ -1,11 +1,12 @@
-
-
 const ItemDetail = ({ producto }) => {
-  return (
-    <article className="item">
-      <h2 className="item__title">{producto.titulo}</h2>
-      <p className="item__detalle">{producto.detalle}</p>
-    </article>
-  )
+
+  console.log(producto)
+    return (
+        <div>
+            <h2 className="item__title">{producto.title}</h2>
+            <p className="item__detalle">{producto.description}</p>
+        </div>
+    )
 }
+
 export default ItemDetail
