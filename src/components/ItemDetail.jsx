@@ -1,10 +1,22 @@
-const ItemDetail = ({ producto }) => {
+import { useContext } from "react"
+import Contador from "./Contador"
+import { contexto } from "./CustomProvider"
 
-  console.log(producto)
+
+const ItemDetail = ({ item }) => {
+
+    const { agregarProducto } = useContext(contexto)
+
+    const onAdd = (contador) => {
+        item.cantidad = contador
+        agregarProducto(item)
+    }
+
     return (
         <div>
-            <h2 className="item__title">{producto.title}</h2>
-            <p className="item__detalle">{producto.description}</p>
+            <h2 className="item__title">{item.title}</h2>
+            <p className="item__detalle">{item.description}</p>
+            <Contador onAdd={onAdd} />
         </div>
     )
 }

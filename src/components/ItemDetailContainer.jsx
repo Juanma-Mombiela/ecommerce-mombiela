@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 const ItemDetailContainer = () => {
 
-    const [producto, setItem] = useState({});
+    const [item, setItem] = useState({});
     const { id } = useParams();
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const ItemDetailContainer = () => {
     return (
         <>
             <div className='container'>
-                <ItemDetail producto={producto} />
+                <ItemDetail item={item} />
             </div>
         </>
     );
