@@ -26,7 +26,10 @@ const ItemDetailContainer = () => {
     return (
         <>
             <div className='container'>
-                <ItemDetail item={item} />
+                <ItemDetail item={item}
+                            id={item.id}
+                            stock={item.stock}
+                            initial={item.initial} />
             </div>
         </>
     );

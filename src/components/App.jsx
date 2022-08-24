@@ -1,14 +1,17 @@
 import { BrowserRouter } from "react-router-dom";
 import Header from "./Header"
 import Main from "./Main";
+import CartProvider from "./CartContext";
 
 const App = () => {
 
     return (
-        <BrowserRouter>
+        <CartProvider>
+            <BrowserRouter>
                 <Header />
                 <Main />
-        </BrowserRouter>
+            </BrowserRouter>
+      </CartProvider>
     )
 }
 

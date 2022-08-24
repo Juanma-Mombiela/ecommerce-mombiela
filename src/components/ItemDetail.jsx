@@ -1,24 +1,40 @@
-import { useContext } from "react"
-import Contador from "./Contador"
-import { contexto } from "./CustomProvider"
+import React, { useState } from 'react';
+import ItemCount from './ItemCount';
 
 
-const ItemDetail = ({ item }) => {
+function ItemDetail( { item, id, stock, initial}) {
 
-    const { agregarProducto } = useContext(contexto)
+    console.log("item",item)
+    console.log("id",id)
+    console.log("stock",stock)
+    console.log("initial",initial)
 
-    const onAdd = (contador) => {
-        item.cantidad = contador
-        agregarProducto(item)
+    const [ counter, setCounter ] = useState(initial)
+
+    function add(){
+        if (counter < stock ){
+            setCounter(counter+1)
+        }
+    }
+
+    function substract() {
+        if (counter > initial ){
+            setCounter(counter-1)
+        }
     }
 
     return (
+
         <div>
-            <h2 className="item__title">{item.title}</h2>
-            <p className="item__detalle">{item.description}</p>
-            <Contador onAdd={onAdd} />
+            <h1>{item.title}</h1>
+            <p>{item.description}</p>
+            <div>
+                <ItemCount initial={initial} stock={stock} add={add} substract={substract}
+                item={item} counter={counter}  id={id}/>
+          </div>
         </div>
     )
 }
 
-export default ItemDetail
+export default ItemDetail 
+
