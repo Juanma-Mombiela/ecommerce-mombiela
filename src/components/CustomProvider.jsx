@@ -11,20 +11,13 @@ export const useCarrito = () => {
 const CustomProvider = (props) => {
 
     const [cantidad, setCantidad] = useState(0);
-    const [carrito, setCarrito] = useState([]);
-    const [precioTotal, setPrecioTotal] = useState(0);
-
-    const agregarProducto = (producto) => {
-        setCantidad(cantidad + producto.cantidad)
-    }
-
-    const eliminarProducto = () => { }
-
-    const vaciarCarrito = () => {
-        setCarrito([])
-    }
-
-    const estaEnCarrito = (id) => { }
+    const [carrito, setCarrito] = useState([
+        {
+            id: 1,
+            nombre: "Producto 1",
+            precio: 100
+        }
+    ]);
 
     const valorDelContexto = {
         cantidad: cantidad,
