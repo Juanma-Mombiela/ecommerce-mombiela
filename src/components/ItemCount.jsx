@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import "./ItemCount.css";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom'
@@ -10,11 +11,11 @@ function ItemCount({ item, id, add, substract, counter }) {
 
     const { addToCart } = useContext(CartContext)
     
+    // Uno las funciones de agregar al carrito con la de mostrar el "Terminar compra"
     function addAndOpen(item, counter, id){
         addToCart(item, counter, id);
         setOpen(true)
     }
-    
     return (
         <div className="itemCount">
             <div className="itemCount__counter">
@@ -22,15 +23,16 @@ function ItemCount({ item, id, add, substract, counter }) {
                     <h3>{counter}</h3>
                 <Button variant="contained" onClick={add}>+</Button>
             </div>
+            { /* Si open es false, que se muestre Agregar al Carrito, pero si es true, Terminar la compra*/}
             { !open ? (<div className="itemCount__agregar">
                 <Button variant="contained" color="primary" onClick={ () => addAndOpen(item, counter, id)}>
-                  <h3>Agregar al <ShoppingCartIcon /> </h3>
+                  <h6>Agregar al <ShoppingCartIcon /> </h6>
                 </Button>
             </div>) : 
             (<div className="itemCount__terminar">
                 <Link to="/cart">
                     <Button variant="contained" color="primary" >
-                        <h3>Terminar la compra</h3>
+                        <h6>Terminar la compra</h6>
                     </Button>
                 </Link>
             </div>) }

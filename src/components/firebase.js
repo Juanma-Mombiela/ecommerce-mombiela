@@ -1,18 +1,15 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
-//Los keys de REACT como aplicacion
 const firebaseConfig = {
-  apiKey: "AIzaSyD3Vjn-FWAZkJQn_mZ06mnLvNE2aetzBqI",
-  authDomain: "comision-34705.firebaseapp.com",
-  projectId: "comision-34705",
-  storageBucket: "comision-34705.appspot.com",
-  messagingSenderId: "272036905770",
-  appId: "1:272036905770:web:a534e1daddd22da1735453"
+  apiKey: "AIzaSyBj04Y06x229qjcgjdxBUvwjh_D-w0HrU4",
+  authDomain: "tierra-media.firebaseapp.com",
+  projectId: "tierra-media",
+  storageBucket: "tierra-media.appspot.com",
+  messagingSenderId: "90304656223",
+  appId: "1:90304656223:web:43467d44e3f4ede8de3cea"
 };
 
-//Esta variable representa "la plataforma firebase"
-const app = initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig)
 
-//Esta variable representa "la base de datos"
-export const db = getFirestore(app)
+export const firestore = firebase.firestore(app)

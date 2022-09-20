@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { CartContext } from './CartContext';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import '../styles/CartWidget.css';
+import { CartContext } from './CartContext';
+import './CartWidget.css';
 
 function CartWidget() {
     const { quantity } = useContext(CartContext)

@@ -1,13 +1,20 @@
-import Item from "./Item"
-import '../styles/items.css';
+import React from 'react';
+import Item from './Item';
+import './ItemList.css';
 
-const ItemList = ({ productos }) => {
+function ItemList( { productos }) {
+
     return (
-        <section className="items">
-            {productos.map((producto) => {
-                return <Item key={producto.id} producto={producto}/>
-            })}
-        </section>
+        <div className="itemList">
+            
+            { /* A los productos recibidos los voy a mapear. Esto me permite acceder a cada uno de ellos */}
+            { /* Por cada producto voy a usar el componente Item */}
+
+            { productos.map( product => <Item key={product.id} id={product.id} 
+            name={product.name} image={product.image} />)
+            }
+        </div>
     )
 }
+
 export default ItemList

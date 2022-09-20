@@ -3,8 +3,8 @@
   top: 0;
   height: 60px;
   width: 100%;
-  color: #000000;
-  background-color: #73c5aa;
+  color: #419477;
+  background-color: #58E0B1;
   display: flex;
 }
 
@@ -15,31 +15,31 @@
   flex: 0.4;
 }
 
-.logo {
+.navbar__logo > a > img {
   height: 50px;
   object-fit: contain;
 }
 
 .navbar__links {
   display: flex;
+  flex: 0.6;
   align-items: center;
   justify-content: flex-end;
   margin: 0px 30px;
-  width: 100%;
 }
 
 .navbar__links > a {
   text-decoration: none;
-  color: #000000;
+  color: #419477;
 }
 
 .navbar__links > a:visited {
-  color: #000000;
+  color: #419477;
 }
 
 .navbar__links > a > p {
   margin: 0 20px;
-  color: #000000;
+  color: #419477;
 }
 
 .navbar__links > p {
@@ -48,5 +48,5 @@
 
 .navbar__cart > a {
   text-decoration: none;
-  color: #000000;
+  color: #419477;
 }

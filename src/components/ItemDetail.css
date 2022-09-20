@@ -1,9 +1,9 @@
-.cartWidget {
+.itemDetail {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.cartWidget > a {
-  text-decoration: none;
+.itemDetail__counter {
+  margin: 20px;
 }

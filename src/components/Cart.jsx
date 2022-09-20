@@ -1,68 +1,104 @@
-import { useState } from "react"
-import List from "./List";
-import Page from "./Page";
-import { useCarrito } from "./CustomProvider";
-import { db } from "./firebase"
-import { collection, addDoc , serverTimestamp } from "firebase/firestore"
-import { toast } from "react-toastify";
+import { Button } from '@material-ui/core';
+import React, { useContext, useState } from 'react'
+import './Cart.css';
+import {CartContext} from './CartContext'
+import CartItem from './CartItem';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import {firestore} from "./firebase";
+import firebase from 'firebase/app';
 
-const Cart = () => {
-
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [usuarios] = useState([]);
-  const { carrito } = useCarrito()
-
-  const handleChangeNombre = (e) => {
-    e.preventDefault()
-    const input = e.target
-    const value = input.value
-    setNombre(value)
-  }
-
-  const handleChangeApellido = (e) => {
-    const input = e.target
-    const value = input.value
-    setApellido(value)
-  }
-
-  const handleConfirm = () => {
-
-    const orden = {
-      items: carrito,
-      total : 300,
-      buyer : {
-        name : "Carlos Suarez",
-        phone : "36750158",
-        email : "email@mail.com"
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+        width: '25ch',
       },
-      date : serverTimestamp()
+    },
+  }));
+
+function Cart() {
+    // Traigo las funciones de Cart y de ClearCart del contexto
+    const { cart, clearCart, total } = useContext(CartContext)
+    // Uso este estado para mostrar el formulario
+    const [ openPay, setOpenPay ] = useState(false)
+    // Estos estados me van a servir para guardar la información del formulario
+    const [ name, setName ] = useState("")
+    const [ phone, setPhone ] = useState("")
+    const [ email, setEmail ] = useState("")
+
+    const classes = useStyles();
+
+    // Función para enviar la orden a firebase
+    function submitOrder(){
+
+        const db = firestore
+        const orders = db.collection('orders')
+
+        const order = {
+            buyer: { name: name, phone: phone, email: email},
+            items: cart,
+            date: firebase.firestore.Timestamp.fromDate(new Date()),
+            total: total,
+        }
+        orders.add(order)
+        .then(({ id }) => alert("Anotá el id de tu compra " + id))
+        .catch((error) => console.log(error))
     }
 
-    const ordersCollection = collection(db, "orders")
-    const consulta = addDoc(ordersCollection, orden)
+    // Rendereo condicional para mostrar los productos o que vaya a comprar
+    return (
+        <div className="cart">
+            { cart.length > 0 ? (
+            <h1>Comprar</h1>
+            )    
+            :
+            ( <>
+            <h1>Aún no elegiste tus productos</h1>
+                <Link to={"/"}>
+                <Button onClick={clearCart} variant="contained" color="primary">
+                    Agregame a tu carrito
+                </Button>
+            </Link>
+            </>)}
 
-    consulta
-      .then((res)=>{
-        toast.success(`Orden ${res.id} creada con exito!`)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
+            <div className="cartItems">
+                { cart.length > 0 && cart.map( product => <CartItem key={product.id} 
+                id={product.id} name={product.name} image={product.image} price={product.price} 
+                amount={product.amount} />)}
+            </div>
 
-  return (
-    <Page titulo="Carrito" subtitulo="Compra y vende">
 
-      <input type="text" placeholder="Nombre" onChange={handleChangeNombre} value={nombre} />
-      <input type="text" placeholder="Apellido" onChange={handleChangeApellido} value={apellido} />
+            { cart.length > 0 &&
+            <>
+            <h2>${total}</h2>
+            <div className="cartItems__buttons">
+                <Button onClick={clearCart} variant="contained" color="primary">
+                    Vaciar carrito
+                </Button>
+                <Button onClick={() => {setOpenPay(true)}} variant="contained" color="primary">
+                    Pagar 
+                </Button>
+            </div>
+            </>}
 
-      <button onClick={handleConfirm}>guardar</button>
+            { openPay && 
+            <form className={classes.root} noValidate autoComplete="off">
+            <TextField id="standard-basic" label="Nombre" value={name} 
+            onChange={(e) => setName(e.target.value)} />
+            <TextField id="standard-basic" label="Telefono" value={phone} 
+            onChange={(e) => setPhone(e.target.value)} />
+            <TextField id="standard-basic" label="Email" value={email} 
+            onChange={(e) => setEmail(e.target.value)} />
+            <Button onClick={submitOrder} variant="contained" color="primary">
+                    Sí!
+                </Button>
+          </form>}
 
-      <List usuarios={usuarios} />
 
-    </Page>
-  )
+        </div>
+    )
 }
 
 export default Cart
